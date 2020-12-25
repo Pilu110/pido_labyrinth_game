@@ -10,7 +10,7 @@ public class MainThread extends Thread {
     private SurfaceHolder surfaceHolder;
     private GameView gameView;
     private boolean running;
-    private int targetFPS = 60;
+    private int targetFPS = 25;
     private double averageFPS;
     public static Canvas canvas;
     public MainThread(SurfaceHolder surfaceHolder, GameView gameView) {
@@ -71,7 +71,7 @@ public class MainThread extends Thread {
                 averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
                 frameCount = 0;
                 totalTime = 0;
-                System.out.println(averageFPS);
+                //System.out.println(averageFPS);
             }
         }
     }

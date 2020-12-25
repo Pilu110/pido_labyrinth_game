@@ -1,10 +1,10 @@
-package com.pido.pidolabyrinthgame;
+package com.pido.pidolabyrinthgame.sprite;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class CharacterSprite {
+public class Character implements Sprite {
     private Bitmap image;
     private int x, y;
     private int xVelocity = 10;
@@ -12,14 +12,16 @@ public class CharacterSprite {
     private int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
     private int screenHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 
-    public CharacterSprite(Bitmap bmp) {
+    public Character(Bitmap bmp) {
         image = bmp;
     }
 
+    @Override
     public void draw(Canvas canvas) {
         canvas.drawBitmap(image, x, y, null);
     }
 
+    @Override
     public void update() {
         x += xVelocity;
         y += yVelocity;

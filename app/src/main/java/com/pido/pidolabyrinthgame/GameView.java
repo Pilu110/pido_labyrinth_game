@@ -1,20 +1,19 @@
 package com.pido.pidolabyrinthgame;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.pido.pidolabyrinthgame.sprite.Labyrinth;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
 
-    private CharacterSprite characterSprite;
+    private Labyrinth labyrinth;
 
     public GameView(Context context) {
         super(context);
@@ -27,8 +26,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-
-        characterSprite = new CharacterSprite(BitmapFactory.decodeResource(getResources(),R.drawable.floor));
+        labyrinth = new Labyrinth(getResources());
 
         thread.setRunning(true);
         thread.start();
@@ -54,20 +52,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-        characterSprite.update();
+        labyrinth.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (canvas != null) {
-
-            canvas.drawColor(Color.WHITE);
-            Paint paint = new Paint();
-            paint.setColor(Color.rgb(250, 0, 0));
-            canvas.drawRect(100, 100, 200, 200, paint);
-
-            characterSprite.draw(canvas);
+            labyrinth.draw(canvas);
         }
     }
 
