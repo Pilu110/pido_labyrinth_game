@@ -27,7 +27,8 @@ public class Labyrinth implements Sprite {
 
     public enum Tile {
         FLOOR(R.drawable.floor),
-        WALL(R.drawable.wall);
+        WALL(R.drawable.wall),
+        SKULL(R.drawable.skull);
 
         int resourceId;
 
@@ -61,10 +62,26 @@ public class Labyrinth implements Sprite {
 
         loadTileImages(resources);
 
-        generate();
+        generateWalls();
+        addSkulls();
     }
 
-    public void generate() {
+    public void addSkulls() {
+        int skulls = 0;
+
+        while (skulls < 10) {
+            int x = (int)(Math.random() * (MAP_WIDTH - 4)) + 3;
+            int y = (int)(Math.random() * (MAP_HEIGHT - 4)) + 3;
+
+            if(map[x][y] == Tile.FLOOR) {
+                map[x][y] = Tile.SKULL;
+                skulls++;
+            }
+
+        }
+    }
+
+    public void generateWalls() {
 
         int[][] depthMap = new int[MAP_WIDTH][MAP_HEIGHT];
 
@@ -197,6 +214,8 @@ public class Labyrinth implements Sprite {
     public void draw(Canvas canvas) {
         for (int x = 0; x < MAP_WIDTH; x++) {
             for (int y = 0; y < MAP_HEIGHT; y++) {
+                //TODO: optimize by merging floor into sprite at loadTileImages
+                canvas.drawBitmap(tileImage.get(Tile.FLOOR), mapCornerX + x * scaledTileWidth, mapCornerY + y * scaledTileHeight, null);
                 canvas.drawBitmap(tileImage.get(map[x][y]), mapCornerX + x * scaledTileWidth, mapCornerY + y * scaledTileHeight, null);
             }
         }
