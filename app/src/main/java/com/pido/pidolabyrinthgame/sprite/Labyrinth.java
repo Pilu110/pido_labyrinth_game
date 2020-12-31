@@ -52,9 +52,12 @@ public class Labyrinth implements Sprite {
     private int maxDepth;
 
     private static final Map<Tile, Bitmap> tileImage = new HashMap<>();
+
     private static double scale;
     private static int scaledTileWidth, scaledTileHeight;
     private static int mapCornerX, mapCornerY;
+
+    private final Bitmap arrowImage;
 
     public Labyrinth(Resources resources) {
         map = new Tile[MAP_WIDTH][MAP_HEIGHT];
@@ -72,6 +75,7 @@ public class Labyrinth implements Sprite {
         mapCornerX = (screenWidth - scaledTileWidth * MAP_WIDTH) / 2;
         mapCornerY = (screenHeight - scaledTileHeight * MAP_HEIGHT) / 2;
 
+        arrowImage = loadArrowImage(resources);
         loadTileImages(resources);
 
         generateWalls();
@@ -255,6 +259,8 @@ public class Labyrinth implements Sprite {
                 canvas.drawBitmap(tileImage.get(map[x][y]), mapCornerX + x * scaledTileWidth, mapCornerY + y * scaledTileHeight, null);
             }
         }
+
+        canvas.drawBitmap(arrowImage, mapCornerX, mapCornerY, null);
     }
 
     @Override
@@ -266,6 +272,10 @@ public class Labyrinth implements Sprite {
         for(Tile tile : Tile.values()) {
             tileImage.put(tile, Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, tile.resourceId), scaledTileWidth, scaledTileHeight, false));
         }
+    }
+
+    public static Bitmap loadArrowImage(Resources resources){
+        return Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.arrow), 3*scaledTileWidth, 3*scaledTileHeight, false);
     }
 
 }
