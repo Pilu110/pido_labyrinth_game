@@ -9,6 +9,7 @@ import android.graphics.Point;
 import android.util.Log;
 import android.util.Pair;
 
+import com.pido.pidolabyrinthgame.Node;
 import com.pido.pidolabyrinthgame.R;
 
 import java.util.ArrayList;
@@ -51,6 +52,9 @@ public class Labyrinth implements Sprite {
     private final int[][] depthMap;
     private int maxDepth;
 
+    private Node pathRoot;
+    private Node pathBranches;
+
     private static final Map<Tile, Bitmap> tileImage = new HashMap<>();
 
     private static double scale;
@@ -82,7 +86,14 @@ public class Labyrinth implements Sprite {
         addSkulls();
     }
 
-    public void addSkulls() {
+
+    private void calculatePaths() {
+        //pathRoot = new Node(null, 0);
+
+
+    }
+
+    private void addSkulls() {
         int skulls = 0;
 
         while (skulls < 5) {
@@ -97,7 +108,7 @@ public class Labyrinth implements Sprite {
         }
     }
 
-    public void generateWalls() {
+    private void generateWalls() {
 
         boolean [][] visited = new boolean[MAP_WIDTH][MAP_HEIGHT];
 
@@ -268,13 +279,13 @@ public class Labyrinth implements Sprite {
 
     }
 
-    public static void loadTileImages(Resources resources) {
+    private static void loadTileImages(Resources resources) {
         for(Tile tile : Tile.values()) {
             tileImage.put(tile, Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, tile.resourceId), scaledTileWidth, scaledTileHeight, false));
         }
     }
 
-    public static Bitmap loadArrowImage(Resources resources){
+    private static Bitmap loadArrowImage(Resources resources){
         return Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.arrow), 3*scaledTileWidth, 3*scaledTileHeight, false);
     }
 
